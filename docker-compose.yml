@@ -1,5 +1,20 @@
 version: "3"
 services:
+  app:
+    container_name: react_container
+    build: ./docker/react
+    ports:
+      - 8080:8080
+    volumes:
+      - ./react:/react
+    stdin_open: true
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+    networks:
+      - default
+    command: yarn start
+
   server:
     container_name: express_container
     build: ./docker/express
