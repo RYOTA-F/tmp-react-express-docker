@@ -13,7 +13,7 @@ services:
       TZ: Asia/Tokyo
     networks:
       - default
-  # command: yarn start
+    command: yarn start
 
   server:
     container_name: express_container
