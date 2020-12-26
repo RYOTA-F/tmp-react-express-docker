@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS vue_express_db;
-CREATE DATABASE vue_express_db;
+DROP DATABASE IF EXISTS react_express_db;
+CREATE DATABASE react_express_db;
 
-USE vue_express_db;
+USE react_express_db;
 
 DROP TABLE IF EXISTS users;
 

@@ -25,7 +25,7 @@ services:
     volumes:
       - ./mysql/conf/my.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./mysql/init_db:/docker-entrypoint-initdb.d
-      - vue_express_data:/var/lib/mysql
+      - react_express_data:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -39,4 +39,4 @@ networks:
   default:
 
 volumes:
-  vue_express_data:
+  react_express_data:
