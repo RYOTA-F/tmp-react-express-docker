@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
 import { Handler } from '../../core/handler'
+import { PARAMETER_INVALID } from '../../constants/error'
+import { Post } from '../../models/index'
 
 type Data = {
   id: number
-  name: string
+  message: string
 }
 export class GetPosts {
   handler: Handler
@@ -16,12 +18,18 @@ export class GetPosts {
    * メイン処理
    */
   async main() {
-    const data = [
-      { id: 10, name: 'test10' },
-      { id: 20, name: 'test20' },
-      { id: 30, name: 'test30' },
-    ]
+    const data = await this.getPosts()
+
+    if (!data) {
+      return this.handler.error(PARAMETER_INVALID)
+    }
 
     return this.handler.json<Data[]>(data)
+  }
+
+  getPosts() {
+    return Post.findAll({
+      attributes: ['id', 'message', 'created_at', 'updated_at'],
+    })
   }
 }

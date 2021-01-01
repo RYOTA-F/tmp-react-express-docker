@@ -18,11 +18,7 @@ export class GetUsers {
    * メイン処理
    */
   async main() {
-    console.log('sequelize')
-
     const data = await this.getUsers()
-
-    console.log('data', data)
 
     if (!data) {
       return this.handler.error(PARAMETER_INVALID)
