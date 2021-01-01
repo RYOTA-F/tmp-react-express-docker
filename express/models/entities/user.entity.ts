@@ -22,4 +22,10 @@ export class User extends Model<User> {
 
   @Column(DataType.INTEGER)
   age!: number
+
+  @Column(DataType.STRING)
+  created_at!: string
+
+  @Column(DataType.STRING)
+  updated_at!: string
 }

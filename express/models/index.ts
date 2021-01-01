@@ -1,8 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
 import log4js from 'log4js'
-import { User } from './user'
-import { Post } from './post'
-import { dbSetting } from './db-setting';
+import { User } from './entities/user.entity'
+import { dbSetting } from './db-setting'
 
 const logger = log4js.getLogger('mysql')
 
@@ -19,7 +18,7 @@ export default new Sequelize({
   },
   define: { timestamps: false, underscored: true },
   pool: { max: 5, min: 0, idle: 10000, acquire: 30000 },
-  models: [User, Post],
+  models: [User],
 })
 
-export { User, Post }
+export { User }

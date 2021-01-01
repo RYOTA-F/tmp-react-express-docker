@@ -32,16 +32,8 @@ export class GetUsers {
   }
 
   getUsers() {
-    console.log('getUsers')
-
     return User.findAll({
-      attributes: ['id', 'name'],
+      attributes: ['id', 'name', 'age', 'created_at', 'updated_at'],
     })
-
-    // return [
-    //   { id: 10, name: 'test10' },
-    //   { id: 20, name: 'test20' },
-    //   { id: 30, name: 'test30' },
-    // ]
   }
 }
