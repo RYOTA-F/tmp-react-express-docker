@@ -1,9 +1,15 @@
+import dayjs from 'dayjs'
 import { Request, Response } from 'express'
 import { Handler } from '../../core/handler'
+import { PARAMETER_INVALID } from '../../constants/error'
+import { Post } from '../../models/index'
 
-type Data = {
+interface Data {
   id: number
-  name: string
+  user_id: number
+  message: string
+  created_at: string
+  updated_at: string
 }
 export class GetPosts {
   handler: Handler
@@ -16,12 +22,28 @@ export class GetPosts {
    * メイン処理
    */
   async main() {
-    const data = [
-      { id: 10, name: 'test10' },
-      { id: 20, name: 'test20' },
-      { id: 30, name: 'test30' },
-    ]
+    const data = await this.getPosts()
+
+    if (!data) {
+      return this.handler.error(PARAMETER_INVALID)
+    }
 
     return this.handler.json<Data[]>(data)
+  }
+
+  async getPosts(): Promise<Data[]> {
+    const data = await Post.findAll({
+      attributes: ['id', 'user_id', 'message', 'created_at', 'updated_at'],
+    })
+
+    return data.map((v) => {
+      return {
+        id: v.id,
+        user_id: v.user_id,
+        message: v.message,
+        created_at: dayjs(v.created_at).format('YYYY年M月D日 HH時mm分'),
+        updated_at: dayjs(v.updated_at).format('YYYY年M月D日 HH時mm分'),
+      }
+    })
   }
 }

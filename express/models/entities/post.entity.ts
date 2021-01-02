@@ -14,12 +14,18 @@ import {
 export class Post extends Model<Post> {
   @PrimaryKey
   @AutoIncrement
-  @Column(DataType.INTEGER)
+  @Column(DataType.INTEGER({ length: 11 }))
   readonly id!: number
 
-  @Column(DataType.INTEGER)
+  @Column(DataType.STRING(255))
+  message!: string
+
+  @Column(DataType.INTEGER({ length: 11 }))
   user_id!: number
 
-  @Column(DataType.INTEGER)
-  content!: string
+  @Column(DataType.DATE())
+  created_at!: string
+
+  @Column(DataType.DATE())
+  updated_at!: string
 }

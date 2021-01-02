@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize-typescript'
 import log4js from 'log4js'
-import { User } from './user'
-import { Post } from './post'
-import { dbSetting } from './db-setting';
+import { User } from './entities/user.entity'
+import { Post } from './entities/post.entity'
+import { dbSetting } from './db-setting'
 
 const logger = log4js.getLogger('mysql')
 

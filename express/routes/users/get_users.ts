@@ -1,11 +1,15 @@
+import dayjs = require('dayjs')
 import { Request, Response } from 'express'
 import { Handler } from '../../core/handler'
 import { PARAMETER_INVALID } from '../../constants/error'
 import { User } from '../../models/index'
 
-type Data = {
+interface Data {
   id: number
   name: string
+  age: number
+  created_at: string
+  updated_at: string
 }
 export class GetUsers {
   handler: Handler
@@ -18,11 +22,7 @@ export class GetUsers {
    * メイン処理
    */
   async main() {
-    console.log('sequelize')
-
     const data = await this.getUsers()
-
-    console.log('data', data)
 
     if (!data) {
       return this.handler.error(PARAMETER_INVALID)
@@ -31,17 +31,19 @@ export class GetUsers {
     return this.handler.json<Data[]>(data)
   }
 
-  getUsers() {
-    console.log('getUsers')
-
-    return User.findAll({
-      attributes: ['id', 'name'],
+  async getUsers(): Promise<Data[]> {
+    const data = await User.findAll({
+      attributes: ['id', 'name', 'age', 'created_at', 'updated_at'],
     })
 
-    // return [
-    //   { id: 10, name: 'test10' },
-    //   { id: 20, name: 'test20' },
-    //   { id: 30, name: 'test30' },
-    // ]
+    return data.map((v) => {
+      return {
+        id: v.id,
+        name: v.name,
+        age: v.age,
+        created_at: dayjs(v.created_at).format('YYYY年M月D日 HH時mm分'),
+        updated_at: dayjs(v.updated_at).format('YYYY年M月D日 HH時mm分'),
+      }
+    })
   }
 }
