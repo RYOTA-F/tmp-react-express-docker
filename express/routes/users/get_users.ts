@@ -3,14 +3,8 @@ import { Request, Response } from 'express'
 import { Handler } from '../../core/handler'
 import { PARAMETER_INVALID } from '../../constants/error'
 import { User } from '../../models/index'
+import { getUsersResponse } from '../../types/index'
 
-interface Data {
-  id: number
-  name: string
-  age: number
-  created_at: string
-  updated_at: string
-}
 export class GetUsers {
   handler: Handler
 
@@ -28,10 +22,10 @@ export class GetUsers {
       return this.handler.error(PARAMETER_INVALID)
     }
 
-    return this.handler.json<Data[]>(data)
+    return this.handler.json<getUsersResponse[]>(data)
   }
 
-  async getUsers(): Promise<Data[]> {
+  async getUsers(): Promise<getUsersResponse[]> {
     const data = await User.findAll({
       attributes: ['id', 'name', 'age', 'created_at', 'updated_at'],
     })
